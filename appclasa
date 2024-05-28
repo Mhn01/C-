@@ -1,0 +1,170 @@
+#include <iostream>
+using namespace std;
+
+
+
+char regiune[51];
+char judet[51];
+double pret_transport;
+double distanta;
+double pret_perkm=20.49;
+
+
+
+int main()
+{
+    cout << "Spune regiunea : ";
+    cin >> regiune;
+    if(string(regiune)=="Bucovina")
+    {
+        distanta=332;
+        pret_transport=(distanta/100)*pret_perkm;
+        cout << "Scrie Judetul : ";
+        cin >> judet;
+        if(string(judet)!="Suceava")
+        {
+            while(string(judet)!="Suceava")
+            {
+                cout << "Introduce un judet corespunzator regiunii tale : ";
+                cin >> judet;
+            }
+        }
+        //cout << pret_transport << " RON";
+    }
+    else if(string(regiune)=="Banat")
+    {
+        distanta=585;
+        pret_transport=(distanta/100)*pret_perkm;
+        cout << "Scrie judetul : ";
+        cin >> judet;
+        if(string(judet)!="Timis" and string(judet)!="Caras-Severin")
+        {
+            while(string(judet)!="Timis" and string(judet)!="Caras-Severin")
+            {
+                cout << "Introduce un judet corespunzator regiunii tale : ";
+                cin >> judet;
+            }
+        }
+    }
+    else if(string(regiune)=="Crisana")
+    {
+        distanta=555;
+        pret_transport=(distanta/100)*pret_perkm;
+        cout << "Scrie judetul : ";
+        cin >> judet;
+        if(string(judet)!="Arad" and string(judet)!="Bihor")
+        {
+            while(string(judet)!="Arad" and string(judet)!="Bihor")
+            {
+                cout << "Introduce un judet corespunzator regiunii tale : ";
+                cin >> judet;
+            }
+        }
+    }
+    else if(string(regiune)=="Dobrogea")
+    {
+        distanta=199;
+        pret_transport=(distanta/100)*pret_perkm;
+        cout << "Scrie judetul : ";
+        cin >> judet;
+        if(string(judet)!="Tulcea" and string(judet)!="Constanta")
+        {
+            while(string(judet)!="Tulcea" and string(judet)!="Constanta")
+            {
+                cout << "Introduce un judet corespunzator regiunii tale : ";
+                cin >> judet;
+            }
+        }
+    }
+
+    else if(string(regiune)=="Maramures")
+    {
+        distanta=597;
+        pret_transport=(distanta/100)*pret_perkm;
+        cout << "Scrie judetul : ";
+        cin >> judet;
+        if(string(judet)!="Maramures" and string(judet)!="Satu Mare")
+        {
+            while(string(judet)!="Maramures" and string(judet)!="Satu Mare")
+            {
+                cout << "Introduce un judet corespunzator regiunii tale : ";
+                cin >> judet;
+            }
+        }
+    }
+
+    else if(string(regiune)=="Moldova")
+    {
+        distanta=180;
+        pret_transport=(distanta/100)*pret_perkm;
+        cout << "Scrie judetul : ";
+        cin >> judet;
+        if(string(judet)!="Iasi" and string(judet)!="Vaslui" and string(judet)!="Galati" and string(judet)!="Vrancea" and string(judet)!="Botosani" and string(judet)!="Neamt" and string(judet)!="Bacau")
+        {
+            while(string(judet)!="Iasi" and string(judet)!="Vaslui" and string(judet)!="Galati" and string(judet)!="Vrancea" and string(judet)!="Botosani" and string(judet)!="Neamt" and string(judet)!="Bacau")
+            {
+                cout << "Introduce un judet corespunzator regiunii tale : ";
+                cin >> judet;
+            }
+        }
+    }
+
+    else if(string(regiune)=="Muntenia")
+    {
+        distanta=167;
+        pret_transport=(distanta/100)*pret_perkm;
+        cout << "Scrie judetul : ";
+        cin >> judet;
+        if(string(judet)!="Arges" and string(judet)!="Calarasi" and string(judet)!="Dambovita" and string(judet)!="Giurgiu" and string(judet)!="Ialomita" and string(judet)!="Prahova" and string(judet)!="Teleorman" and string(judet)!="Bucuresti" and string(judet)!="Ilfov" and string(judet)!="Braila" and string(judet)!="Buzau")
+        {
+            while(string(judet)!="Arges" and string(judet)!="Calarasi" and string(judet)!="Dambovita" and string(judet)!="Giurgiu" and string(judet)!="Ialomita" and string(judet)!="Prahova" and string(judet)!="Teleorman" and string(judet)!="Bucuresti" and string(judet)!="Ilfov" and string(judet)!="Braila" and string(judet)!="Buzau")
+            {
+                cout << "Introduce un judet corespunzator regiunii tale : ";
+                cin >> judet;
+            }
+        }
+    }
+
+
+    else if(string(regiune)=="Oltenia")
+    {
+        distanta=276;
+        pret_transport=(distanta/100)*pret_perkm;
+        cout << "Scrie judetul : ";
+        cin >> judet;
+        if(string(judet)!="Mehedinti" and string(judet)!="Olt" and string(judet)!="Valcea" and string(judet)!="Gorj" and string(judet)!="Dolj")
+        {
+            while(string(judet)!="Mehedinti" and string(judet)!="Olt" and string(judet)!="Valcea" and string(judet)!="Gorj" and string(judet)!="Dolj")
+            {
+                cout << "Introduce un judet corespunzator regiunii tale : ";
+                cin >> judet;
+            }
+        }
+    }
+
+    else if(string(regiune)=="Transilvania")
+    {
+        distanta=390;
+        pret_transport=(distanta/100)*pret_perkm;
+        cout << "Scrie judetul : ";
+        cin >> judet;
+        if(string(judet)!="Hunedoara" and string(judet)!="Sibiu" and string(judet)!="Brasov" and string(judet)!="Covasna" and string(judet)!="Harghita" and string(judet)!="Mures" and string(judet)!="Bistrita-Nasaud" and string(judet)!="Salaj" and string(judet)!="Cluj" and string(judet)!="Alba")
+        {
+            while(string(judet)!="Hunedoara" and string(judet)!="Sibiu" and string(judet)!="Brasov" and string(judet)!="Covasna" and string(judet)!="Harghita" and string(judet)!="Mures" and string(judet)!="Bistrita-Nasaud" and string(judet)!="Salaj" and string(judet)!="Cluj" and string(judet)!="Alba")
+            {
+                cout << "Introduce un judet corespunzator regiunii tale : ";
+                cin >> judet;
+            }
+        }
+    }
+
+
+    cout << regiune << " " << judet << " " << pret_transport;
+
+
+
+
+
+
+    return 0;
+}
