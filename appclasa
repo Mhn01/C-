@@ -169,6 +169,7 @@ int main()
     return 0;
 }
 
+//////////////////
 
 #include <iostream>
 #include <cstring>
@@ -178,7 +179,8 @@ using namespace std;
  
 int categ_produs;
 
- 
+
+
 int 
 main () 
  { 
@@ -219,16 +221,82 @@ while (categ_produs != 1 && categ_produs != 2 && categ_produs != 3 && categ_prod
         cin >> categ_produs;
 	
     }
+
+return 0; 
+}
+
+//////////////////////
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+short int categ_produs;
+short int variab_categ;
+string categorie_pr;
+
+
+
+  
+int main () 
+ { 
+cout << "Apasati 'Enter' pentru afisarea categoriilor.";
+  
+cin.get ();
+  
+cout << " Selectati categoria produsului dorit : " << endl << endl;
+  
+cout << " 1. Electrocasnice" << endl;
+  
+cout << " 2. Telefoane / Tablete" << endl;
+  
+cout << " 3. Laptop / Desktop / IT" << endl;
+  
+cout << " 4. Sport / Biciclete / Trotinete" << endl;
+
+cin>>categ_produs;
+
+if(categ_produs>=1 and categ_produs<=4)
+{
+	variab_categ=1;
+}
+else
+{
+while(variab_categ!=1)
+    {
+    cin >> categ_produs;
+    if(categ_produs>=1 and categ_produs<=4)
+        {
+	    variab_categ=1;
+        }
+    }
+}
+if(categ_produs==1)
+{
+    categorie_pr="electrocasnicelor";
+}
+else if(categ_produs==2)
+{
+    categorie_pr="telefoanelor / tabletelor"
+}
+else if(categ_produs==3)
+{
+    categorie_pr="laptop / desktop / it"
+}
+else if(categ_produs==4)
+{
+    
+}
+if(variab_categ)
+{
+    cout << "Apasa 'Enter' pentru afisarea produselor din categoria " << categorie_pr << " : " << endl;
+}
   
  
- 
- 
- 
- 
- 
- 
+
 return 0;
 
- 
 }
+
+
 
