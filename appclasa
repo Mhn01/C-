@@ -168,3 +168,67 @@ int main()
 
     return 0;
 }
+
+
+#include <iostream>
+#include <cstring>
+#include <cctype>
+using namespace std;
+
+ 
+int categ_produs;
+
+ 
+int 
+main () 
+ { 
+cout << "Apasati 'Enter' pentru afisarea categoriilor.";
+  
+ 
+cin.get ();
+  
+ 
+cout << " Selectati categoria produsului dorit : " << endl << endl;
+  
+ 
+cout << " 1. Electrocasnice" << endl; // electrocasnice mari-frigidere, masina de rufe, aragaz, hota, cuptor, masina de vase
+                                      // electrocasnice mici-aspiratopare, fier calcat, espressoare, pachet ustensile bucatarie
+ 
+cout << " 2. Telefoane / Tablete" << endl;// telefoane-samsung, iphone, xiaomi, nokia, motorola, oppo
+                                        // tablete-apple, samsung, lenovo, huawai
+  
+ 
+cout << " 3. Laptop / Desktop / IT" << endl;//Laptop-gaming sau tip office
+                                            //Sisteme pc-imprimante, componente calculator
+                                            //Periferice si accesorii
+  
+ 
+cout << " 4. Sport / Biciclete / Trotinete" << endl;//Vehicule electrocasnice
+                                                    //Aparate fitness
+                                                    //Accesorii imbracaminte sport
+  
+ 
+cin >> categ_produs;
+  
+while (categ_produs != 1 && categ_produs != 2 && categ_produs != 3 && categ_produs != 4)
+	
+	{
+	  
+        cout <<" Introduceti o valoare ce corespunde cu una din gamele de produse oferite de noi."<<endl;
+	  
+        cin >> categ_produs;
+	
+    }
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+return 0;
+
+ 
+}
+
