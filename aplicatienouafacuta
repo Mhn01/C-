@@ -1,0 +1,988 @@
+#include <iostream>
+#include <fstream> // fisierele
+#include <string>
+using namespace std;
+
+// declar structuri pentru fiecare categorie de obiecte.
+
+struct frigidere
+{
+    double pret;
+} a[5];
+
+struct masini_spalat_rufe
+{
+    double pret1;
+} b[5];
+
+struct aragazuri_cuptoare
+{
+    double pret2;
+} c[5];
+
+struct masini_spalat_vase
+{
+    double pret3;
+} d[5];
+
+struct telefoane
+{
+    double pret4;
+} e[5];
+
+struct tablete
+{
+    double pret5;
+} f[5];
+
+struct laptop
+{
+    double pret6;
+} g[5];
+
+struct pcgamingoffice
+{
+    double pret7;
+} h[5];
+
+struct sport
+{
+    double pret8;
+} i[5];
+
+struct apfit
+{
+    double pret9;
+} j[5];
+
+
+//date pentru factura/livrare
+    char nume[51];
+    char prenume[51];
+    char nr_tel[11];
+    char judet[51]; // in fiecare judet presupunem ca avem cate un depozit
+    char met_plata[51];
+
+
+int main()
+{ // Se declara toate preturile aici, sus.
+
+    { // Preturi Frigidere :
+        a[1].pret = 849.99;
+        a[2].pret = 1199.99;
+        a[3].pret = 499.99;
+        a[4].pret = 2999.99;
+    }
+
+    { // Preturi Masini de spalat rufe :
+        b[1].pret1 = 949.99;
+        b[2].pret1 = 1699.99;
+        b[3].pret1 = 2199.99;
+        b[4].pret1 = 1999.99;
+    }
+
+    { // Preturi Aragazuri/Cuptoare :
+        c[1].pret2 = 1449.99;
+        c[2].pret2 = 1000;
+        c[3].pret2 = 4780.99;
+        c[4].pret2 = 1679.99;
+    }
+
+    { // Preturi Masini de spalat vase :
+        d[1].pret3 = 1149.99;
+        d[2].pret3 = 2399.99;
+        d[3].pret3 = 1490.99;
+        d[4].pret3 = 2049.99;
+    }
+
+    { // Preturi Telefoane :
+        e[1].pret4 = 3049;
+        e[2].pret4 = 2978.99;
+        e[3].pret4 = 1490.99;
+        e[4].pret4 = 1555.99;
+    }
+
+    { // Preturi Tablete
+        f[1].pret5 = 5549.99;
+        f[2].pret5 = 4500.99;
+        f[3].pret5 = 3450;
+        f[4].pret5 = 3499.99;
+    }
+
+    { // Preturi Laptop-uri
+        g[1].pret6 = 9799.99;
+        g[2].pret6 = 7599.99;
+        g[3].pret6 = 2499.99;
+        g[4].pret6 = 5349.99;
+    }
+
+    { // Preturi Pc-uri
+        h[1].pret7 = 8999.99;
+        h[2].pret7 = 4599.99;
+        h[3].pret7 = 14999.99;
+        h[4].pret7 = 5599.99;
+    }
+
+
+    { // Preturi Sport
+        i[1].pret8 = 5399.99;
+        i[2].pret8 = 295.99;
+        i[3].pret8 = 2950.99;
+        i[4].pret8 = 1400;
+    }
+
+    { // Preturi apfit
+        j[1].pret9 = 2249.99;
+        j[2].pret9 = 1769.99;
+        j[3].pret9 = 3499;
+        j[4].pret9 = 449.99;
+    }
+
+
+    // 1. Sistemul de creare cont, autentificare.
+    short int v1_ui; // 1 sau 2 pentru accesarea meniului.
+    short int tasta;
+    double pret_total = 0;
+    string usn, pass;
+    cout << "Bine ati venit in aplicatia LLAPLACE!" << endl;
+    cout << "Apasati tasta '1' pentru crearea contului sau tasta '2' pentru accesarea contului." << endl;
+    cin >> v1_ui;
+
+    if (v1_ui == 1)
+    {
+        cout << "Inregistrare cont : " << endl;
+        cout << "--------------------" << endl;
+        cout << "Introduceti username-ul dvs : " << endl;
+        cin >> usn;
+        cout << "Introduceti parola dvs : " << endl;
+        cin >> pass;
+        ofstream file; // se creeaza un fisier pe care il voi caracteriza. // se declara fisierul.
+        file.open(usn + ".txt");
+        file << usn << endl;
+        file << pass << endl;
+        file.close();
+        cout << "Bine ai venit in contul tau, " << usn << " !" << endl;
+    }
+
+    else if (v1_ui == 2)
+    {
+        string username, parola;
+        cout << "Bine ai revenit in contul tau!" << endl;
+        cout << "Introduceti username-ul dvs : " << endl;
+        cin >> username;
+        cout << "Introduceti parola dvs : " << endl;
+        cin >> parola;
+        ifstream read(username + ".txt");
+        getline(read, usn);
+        getline(read, pass);
+        if (usn == username and pass == parola)
+        {
+            cout << "Logare cu succes !" << endl;
+        }
+        else if (usn != username)
+        {
+            cout << "Nu exista un cont facut pe acest username !" << endl;
+            while (usn != username)
+            {
+                cout << "Introduceti un username valid : " << endl;
+                cin >> username;
+                ifstream read(username + ".txt");
+                getline(read, usn);  // citesc o data username
+                getline(read, pass); // citesc si parola tot aici ca sa o pot verifica mai tz.
+                if (usn == username)
+                    break;
+            }
+            cout << "Introduceti parola contului : " << endl;
+            cin >> parola;
+            if (parola != pass)
+            {
+                while (parola != pass)
+                {
+                    cout << "Introduceti o parola valida : " << endl;
+                    cin >> parola;
+                    if (parola == pass)
+                        break;
+                }
+            }
+            cout << "Logare cu succes !" << endl;
+        }
+        else if (pass != parola)
+        {
+            if (parola != pass)
+            {
+                while (parola != pass)
+                {
+                    cout << "Introduceti o parola valida : " << endl;
+                    cin >> parola;
+                    if (parola == pass)
+                        break;
+                }
+            }
+            cout << "Logare cu succes !" << endl;
+        }
+    }
+
+    cout << "Apasati tasta 'Enter' pentru a accesa meniul de categorii." << endl;
+    cin.get();
+    cin.get();
+    cout << "Selectati categoria produsului dorit." << endl;
+    cout << "Tasta '1' - Electrocasnice." << endl;
+    cout << "Tasta '2' - Telefoane / Tablete." << endl;
+    cout << "Tasta '3' - Laptop / Desktop-PC." << endl;
+    cout << "Tasta '4' - Sport / Aparate pentru miscare." << endl;
+    cout << endl;
+    int tipelc_value = 1;
+    int fin_com = 1;
+    while (fin_com)
+    {
+        cout << "Alege categoria produsului (1->4) : " << endl;
+        cin >> tasta;
+        if (tasta == 1) // 1
+        {
+            cout << "Ati ales categoria 'Electrocasnice' ! " << endl;
+            cout << "Apasati tasta 'Enter' pentru a vedea tipurile de electrocasnice." << endl;
+            cin.get();
+            cin.get();
+            short int tipelc; // tipul de electrocasnic dorit de cumparator.
+            cout << "Tasta '1' - Frigidere" << endl;
+            cout << "Tasta '2' - Masini de spalat." << endl;
+            cout << "Tasta '3' - Aragazuri/Cuptoare." << endl;
+            cout << "Tasta '4' - Masini de spalat vasele." << endl;
+            while (tipelc_value)
+            {
+                cout << "Apasa tasta specifica fiecarei categorii !" << endl;
+                cin >> tipelc;
+                if (tipelc == 1)
+                {
+                    cout << "Apasa tasta 'Enter' pentru a afise produsele ." << endl;
+                    cin.get();
+                    cin.get();
+                    int ok = 1;
+                    int cant = 0;
+                    short int ts; // tasta specifica;
+                    cout << "Produsele din categoria aleasa sunt : " << endl;
+                    cout << "Tasta '1' - 'Frigider Vortex 206L' ~ " << a[1].pret << " lei" << endl;
+                    cout << "Tasta '2' - 'Frigider Arctic 250L' ~ " << a[2].pret << " lei" << endl;
+                    cout << "Tasta '3' - 'Frigider Minibar Vortex 65L' ~ " << a[3].pret << " lei" << endl;
+                    cout << "Tasta '4' - 'Frigider Samsung 412L' ~ " << a[4].pret << " lei" << endl;
+                    while (ok)
+                    {
+                        int tstok;
+                        cout << "Apasa tasta specifica fiecarui produs pentru adaugarea acestuia in cosul de cumparaturi." << endl;
+                        cin >> ts;
+                        if (ts == 1)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Frigider Vortex 206L'." << endl;
+                            pret_total = pret_total + (a[1].pret * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 2)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Frigider Arctic 250L'." << endl;
+                            pret_total = pret_total + (a[2].pret * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 3)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Frigider Minibar Vortex 65L'." << endl;
+                            pret_total = pret_total + (a[3].pret * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 4)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Frigider Samsung 412L'." << endl;
+                            pret_total = pret_total + (a[4].pret * cant);
+                            cant = 0;
+                        }
+                        cout << "Doriti sa parasiti categoria 'Frigidere'?" << endl;
+                        cout << "Tasta '1' - 'NU' ." << endl;
+                        cout << "Tasta '2' - 'DA' ." << endl;
+                        cin >> tstok;
+                        if (tstok == 1)
+                            ok = 1;
+                        else
+                            ok = 0;
+                    }
+                }
+
+                if (tipelc == 2)
+                {
+                    cout << "Apasa tasta 'Enter' pentru a afise produsele ." << endl;
+                    cin.get();
+                    cin.get();
+                    int ok = 1;
+                    int cant = 0;
+                    short int ts; // tasta specifica;
+                    cout << "Produsele din categoria aleasa sunt : " << endl;
+                    cout << "Tasta '1' - 'Masina de spalat rufe Vortex 6kg' ~ " << b[1].pret1 << " lei" << endl;
+                    cout << "Tasta '2' - 'Masina de spalat rufe Beko 7kg' ~ " << b[2].pret1 << " lei" << endl;
+                    cout << "Tasta '3' - 'Masina de spalat rufe Samsung 9kg' ~ " << b[3].pret1 << " lei" << endl;
+                    cout << "Tasta '4' - 'Masina de spalat rufe Whirlpool 7kg' ~ " << b[4].pret1 << " lei" << endl;
+                    while (ok)
+                    {
+                        int tstok;
+                        cout << "Apasa tasta specifica fiecarui produs pentru adaugarea acestuia in cosul de cumparaturi." << endl;
+                        cin >> ts;
+                        if (ts == 1)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Masina de spalat rufe Vortex 6kg'." << endl;
+                            pret_total = pret_total + (b[1].pret1 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 2)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Masina de spalat rufe Beko 7kg'." << endl;
+                            pret_total = pret_total + (b[2].pret1 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 3)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Masina de spalat rufe Samsung 9kg'." << endl;
+                            pret_total = pret_total + (b[3].pret1 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 4)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Masina de spalat rufe Whirlpool 7kg'." << endl;
+                            pret_total = pret_total + (b[4].pret1 * cant);
+                            cant = 0;
+                        }
+                        cout << "Doriti sa parasiti categoria 'Masini de spalat'?" << endl;
+                        cout << "Tasta '1' - 'NU' ." << endl;
+                        cout << "Tasta '2' - 'DA' ." << endl;
+                        cin >> tstok;
+                        if (tstok == 1)
+                            ok = 1;
+                        else
+                            ok = 0;
+                    }
+                }
+
+                if (tipelc == 3)
+                {
+                    cout << "Apasa tasta 'Enter' pentru a afise produsele ." << endl;
+                    cin.get();
+                    cin.get();
+                    int ok = 1;
+                    int cant = 0;
+                    short int ts; // tasta specifica;
+                    cout << "Produsele din categoria aleasa sunt : " << endl;
+                    cout << "Tasta '1' - 'Aragaz BEKO Electric' ~ " << c[1].pret2 << " lei" << endl;               // 1449.99 lei
+                    cout << "Tasta '2' - 'Aragaz Vortex 60L' ~ " << c[2].pret2 << " lei" << endl;                  // 1000 lei
+                    cout << "Tasta '3' - 'Cuptor incorporabil ELECTROLUX 70L' ~ " << c[3].pret2 << " lei" << endl; // 4780.99 lei
+                    cout << "Tasta '4' - 'Cuptor microunde HISENSE 30L' ~ " << c[4].pret2 << " lei" << endl;       // 1679.99 lei.
+                    while (ok)
+                    {
+                        int tstok;
+                        cout << "Apasa tasta specifica fiecarui produs pentru adaugarea acestuia in cosul de cumparaturi." << endl;
+                        cin >> ts;
+                        if (ts == 1)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Aragaz BEKO Electric 55L'." << endl;
+                            pret_total = pret_total + (c[1].pret2 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 2)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Aragaz Vortex 60L'." << endl;
+                            pret_total = pret_total + (c[2].pret2 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 3)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Cuptor incorporabil ELECTROLUX 70L'." << endl;
+                            pret_total = pret_total + (c[3].pret2 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 4)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Cuptor microunde HISENSE 30L'." << endl;
+                            pret_total = pret_total + (c[4].pret2 * cant);
+                            cant = 0;
+                        }
+                        cout << "Doriti sa parasiti categoria 'Aragazuri/Cuptoare'?" << endl;
+                        cout << "Tasta '1' - 'NU' ." << endl;
+                        cout << "Tasta '2' - 'DA' ." << endl;
+                        cin >> tstok;
+                        if (tstok == 1)
+                            ok = 1;
+                        else
+                            ok = 0;
+                    }
+                }
+
+                if (tipelc == 4)
+                {
+                    cout << "Apasa tasta 'Enter' pentru a afise produsele ." << endl;
+                    cin.get();
+                    cin.get();
+                    int ok = 1;
+                    int cant = 0;
+                    short int ts; // tasta specifica;
+                    cout << "Produsele din categoria aleasa sunt : " << endl;
+                    cout << "Tasta '1' - 'Masina de spalat vase Gorenje' ~ " << d[1].pret3 << " lei" << endl;   // 1149.99 lei
+                    cout << "Tasta '2' - 'Masina de spalat vase Whirlpool' ~ " << d[2].pret3 << " lei" << endl; // 2399.99 lei
+                    cout << "Tasta '3' - 'Masina de spalat vase Beko' ~ " << d[3].pret3 << " lei" << endl;      // 1490.99 lei
+                    cout << "Tasta '4' - 'Masina de spalat vase Bosch' ~ " << d[4].pret3 << " lei" << endl;     // 2049.99 lei.
+                    while (ok)
+                    {
+                        int tstok;
+                        cout << "Apasa tasta specifica fiecarui produs pentru adaugarea acestuia in cosul de cumparaturi." << endl;
+                        cin >> ts;
+                        if (ts == 1)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Masina de spalat vase Gorenje'." << endl;
+                            pret_total = pret_total + (d[1].pret3 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 2)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Masina de spalat vase Whirlpool'." << endl;
+                            pret_total = pret_total + (d[2].pret3 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 3)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Masina de spalat vase Beko'." << endl;
+                            pret_total = pret_total + (d[3].pret3 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 4)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Masina de spalat vase Bosch'." << endl;
+                            pret_total = pret_total + (d[4].pret3 * cant);
+                            cant = 0;
+                        }
+                        cout << "Doriti sa parasiti categoria 'Masini de spalat vase'?" << endl;
+                        cout << "Tasta '1' - 'NU' ." << endl;
+                        cout << "Tasta '2' - 'DA' ." << endl;
+                        cin >> tstok;
+                        if (tstok == 1)
+                            ok = 1;
+                        else
+                            ok = 0;
+                    }
+                }
+                cout << "Doriti sa parasiti categoria 'Electrocasnice'?" << endl;
+                cout << "Tasta '1' - 'NU' ." << endl;
+                cout << "Tasta '2' - 'DA' ." << endl;
+                int ok2 = 0;
+                cin >> ok2;
+                if (ok2 == 1)
+                    tipelc_value = 1;
+                else
+                    tipelc_value = 0;
+            }
+        }
+
+        if (tasta == 2) // 2
+        {
+            cout << "Ati ales categoria 'Telefoane/Tablete' ! " << endl;
+            cout << "Apasati tasta 'Enter' pentru a vedea tipurile de telefoane/tablete." << endl;
+            cin.get();
+            cin.get();
+            short int tipelc; // tipul de electrocasnic dorit de cumparator.
+            cout << "Tasta '1' - Telefoane." << endl;
+            cout << "Tasta '2' - Tablete." << endl;
+            while (tipelc_value)
+            {
+                cout << "Apasa tasta specifica fiecarei categorii !" << endl;
+                cin >> tipelc;
+                if (tipelc == 1)
+                {
+                    cout << "Apasa tasta 'Enter' pentru a afise produsele ." << endl;
+                    cin.get();
+                    cin.get();
+                    int ok = 1;
+                    int cant = 0;
+                    short int ts; // tasta specifica;
+                    cout << "Produsele din categoria aleasa sunt : " << endl;
+                    cout << "Tasta '1' - 'Telefon Iphone' ~ " << e[1].pret4 << " lei" << endl;
+                    cout << "Tasta '2' - 'Telefon Samsung' ~ " << e[2].pret4 << " lei" << endl;
+                    cout << "Tasta '3' - 'Telefon Huawei' ~ " << e[3].pret4 << " lei" << endl;
+                    cout << "Tasta '4' - 'Telefon Xiaomi' ~ " << e[4].pret4 << " lei" << endl;
+                    while (ok)
+                    {
+                        int tstok;
+                        cout << "Apasa tasta specifica fiecarui produs pentru adaugarea acestuia in cosul de cumparaturi." << endl;
+                        cin >> ts;
+                        if (ts == 1)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Telefon Iphone'." << endl;
+                            pret_total = pret_total + (e[1].pret4 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 2)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Telefon Samsung'." << endl;
+                            pret_total = pret_total + (e[2].pret4 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 3)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Telefon Huawei'." << endl;
+                            pret_total = pret_total + (e[3].pret4 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 4)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Telefon Xiaomi'." << endl;
+                            pret_total = pret_total + (e[4].pret4 * cant);
+                            cant = 0;
+                        }
+                        cout << "Doriti sa parasiti categoria 'Telefoane'?" << endl;
+                        cout << "Tasta '1' - 'NU' ." << endl;
+                        cout << "Tasta '2' - 'DA' ." << endl;
+                        cin >> tstok;
+                        if (tstok == 1)
+                            ok = 1;
+                        else
+                            ok = 0;
+                    }
+                }
+
+                if (tipelc == 2)
+                {
+                    cout << "Apasa tasta 'Enter' pentru a afise produsele ." << endl;
+                    cin.get();
+                    cin.get();
+                    int ok = 1;
+                    int cant = 0;
+                    short int ts; // tasta specifica;
+                    cout << "Produsele din categoria aleasa sunt : " << endl;
+                    cout << "Tasta '1' - 'Tableta Ipad' ~ " << f[1].pret5 << " lei" << endl;
+                    cout << "Tasta '2' - 'Tableta Samsung' ~ " << f[2].pret5 << " lei" << endl;
+                    cout << "Tasta '3' - 'Tableta Lenovo' ~ " << f[3].pret5 << " lei" << endl;
+                    cout << "Tasta '4' - 'Tableta Asus' ~ " << f[4].pret5 << " lei" << endl;
+                    while (ok)
+                    {
+                        int tstok;
+                        cout << "Apasa tasta specifica fiecarui produs pentru adaugarea acestuia in cosul de cumparaturi." << endl;
+                        cin >> ts;
+                        if (ts == 1)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Tableta Ipad'." << endl;
+                            pret_total = pret_total + (f[1].pret5 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 2)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Tableta Samsung'." << endl;
+                            pret_total = pret_total + (f[2].pret5 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 3)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Tableta Lenovo'." << endl;
+                            pret_total = pret_total + (f[3].pret5 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 4)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Tableta Asus'." << endl;
+                            pret_total = pret_total + (f[4].pret5 * cant);
+                            cant = 0;
+                        }
+                        cout << "Doriti sa parasiti categoria 'Tablete'?" << endl;
+                        cout << "Tasta '1' - 'NU' ." << endl;
+                        cout << "Tasta '2' - 'DA' ." << endl;
+                        cin >> tstok;
+                        if (tstok == 1)
+                            ok = 1;
+                        else
+                            ok = 0;
+                    }
+                }
+                cout << "Doriti sa parasiti categoria 'Telefoane/Tablete' ?" << endl;
+                cout << "Tasta '1' - 'NU' ." << endl;
+                cout << "Tasta '2' - 'DA' ." << endl;
+                int ok2 = 0;
+                cin >> ok2;
+                if (ok2 == 1)
+                    tipelc_value = 1;
+                else
+                    tipelc_value = 0;
+            }
+        }
+        /////
+        if (tasta == 3)
+        {
+            cout << "Ati ales categoria 'Laptop / Desktop-PC' ! " << endl;
+            cout << "Apasati tasta 'Enter' pentru a vedea tipurile de telefoane/tablete." << endl;
+            cin.get();
+            cin.get();
+            short int tipelc; // tipul de electrocasnic dorit de cumparator.
+            cout << "Tasta '1' - Laptop." << endl;
+            cout << "Tasta '2' - Desktop-PC." << endl;
+            while (tipelc_value)
+            {
+                cout << "Apasa tasta specifica fiecarei categorii !" << endl;
+                cin >> tipelc;
+                if (tipelc == 1)
+                {
+                    cout << "Apasa tasta 'Enter' pentru a afise produsele ." << endl;
+                    cin.get();
+                    cin.get();
+                    int ok = 1;
+                    int cant = 0;
+                    short int ts; // tasta specifica;
+                    cout << "Produsele din categoria aleasa sunt : " << endl;
+                    cout << "Tasta '1' - 'Laptop Gaming ASUS ROG Strix G18 G814JVR-N6021' ~ " << g[1].pret6 << " lei" << endl; // 9799.99
+                    cout << "Tasta '2' - 'Laptop APPLE MacBook Air 13' ~ " << g[2].pret6 << " lei" << endl;                    // 7599.99 lei
+                    cout << "Tasta '3' - 'Laptop ASUS VivoBook 15 R1504ZA-BQ497' ~ " << g[3].pret6 << " lei" << endl;          // 2499.99
+                    cout << "Tasta '4' - 'Laptop Gaming MSI Cyborg 15 A13VF-686XRO' ~ " << g[4].pret6 << " lei" << endl;       // 5349.99
+                    while (ok)
+                    {
+                        int tstok;
+                        cout << "Apasa tasta specifica fiecarui produs pentru adaugarea acestuia in cosul de cumparaturi." << endl;
+                        cin >> ts;
+                        if (ts == 1)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Laptop Gaming ASUS ROG Strix G18 G814JVR-N6021'." << endl;
+                            pret_total = pret_total + (g[1].pret6 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 2)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Laptop APPLE MacBook Air 13'." << endl;
+                            pret_total = pret_total + (g[2].pret6 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 3)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Laptop ASUS VivoBook 15 R1504ZA-BQ497'." << endl;
+                            pret_total = pret_total + (g[3].pret6 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 4)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Laptop Gaming MSI Cyborg 15 A13VF-686XRO'." << endl;
+                            pret_total = pret_total + (g[4].pret6 * cant);
+                            cant = 0;
+                        }
+                        cout << "Doriti sa parasiti categoria 'Laptopuri'?" << endl;
+                        cout << "Tasta '1' - 'NU' ." << endl;
+                        cout << "Tasta '2' - 'DA' ." << endl;
+                        cin >> tstok;
+                        if (tstok == 1)
+                            ok = 1;
+                        else
+                            ok = 0;
+                    }
+                }
+
+                if (tipelc == 2)
+                {
+                    cout << "Apasa tasta 'Enter' pentru a afise produsele ." << endl;
+                    cin.get();
+                    cin.get();
+                    int ok = 1;
+                    int cant = 0;
+                    short int ts; // tasta specifica;
+                    cout << "Produsele din categoria aleasa sunt : " << endl;
+                    cout << "Tasta '1' - 'Sistem Desktop Gaming LENOVO Legion T5 26ARA8' ~ " << h[1].pret7 << " lei" << endl;    // 8999.99
+                    cout << "Tasta '2' - 'Sistem Desktop PC MYRIA Asus' ~ " << h[2].pret7 << " lei" << endl;                     // 4599.99
+                    cout << "Tasta '3' - 'Sistem Desktop Gaming ROG Strix G16CH-1370KF0880' ~ " << h[3].pret7 << " lei" << endl; // 14999.99
+                    cout << "Tasta '4' - 'Sistem PC All in One DELL OptiPlex 7410' ~ " << h[4].pret7 << " lei" << endl;          // 5599.99
+                    while (ok)
+                    {
+                        int tstok;
+                        cout << "Apasa tasta specifica fiecarui produs pentru adaugarea acestuia in cosul de cumparaturi." << endl;
+                        cin >> ts;
+                        if (ts == 1)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Sistem Desktop Gaming LENOVO Legion T5 26ARA8'." << endl;
+                            pret_total = pret_total + (h[1].pret7 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 2)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Sistem Desktop PC MYRIA Asus'." << endl;
+                            pret_total = pret_total + (h[2].pret7 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 3)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Sistem Desktop Gaming ROG Strix G16CH-1370KF0880'." << endl;
+                            pret_total = pret_total + (h[3].pret7 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 4)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Sistem PC All in One DELL OptiPlex 7410'." << endl;
+                            pret_total = pret_total + (h[4].pret7 * cant);
+                            cant = 0;
+                        }
+                        cout << "Doriti sa parasiti categoria 'Desktop-PC'?" << endl;
+                        cout << "Tasta '1' - 'NU' ." << endl;
+                        cout << "Tasta '2' - 'DA' ." << endl;
+                        cin >> tstok;
+                        if (tstok == 1)
+                            ok = 1;
+                        else
+                            ok = 0;
+                    }
+                }
+                cout << "Doriti sa parasiti categoria 'Laptop / Desktop-PC' ?" << endl;
+                cout << "Tasta '1' - 'NU' ." << endl;
+                cout << "Tasta '2' - 'DA' ." << endl;
+                int ok2 = 0;
+                cin >> ok2;
+                if (ok2 == 1)
+                    tipelc_value = 1;
+                else
+                    tipelc_value = 0;
+            }
+        }
+
+        ////
+
+        if (tasta == 4)
+        {
+            cout << "Ati ales categoria 'Sport / Aparate pentru miscare.' ! " << endl;
+            cout << "Apasati tasta 'Enter' pentru a vedea tipurile de aparate pentru miscare si sport" << endl;
+            cin.get();
+            cin.get();
+            short int tipelc; // tipul de electrocasnic dorit de cumparator.
+            cout << "Tasta '1' - Sport." << endl;
+            cout << "Tasta '2' - Aparate pentru miscare." << endl;
+            while (tipelc_value)
+            {
+                cout << "Apasa tasta specifica fiecarei categorii !" << endl;
+                cin >> tipelc;
+                if (tipelc == 1)
+                {
+                    cout << "Apasa tasta 'Enter' pentru a afise produsele ." << endl;
+                    cin.get();
+                    cin.get();
+                    int ok = 1;
+                    int cant = 0;
+                    short int ts; // tasta specifica;
+                    cout << "Produsele din categoria aleasa sunt : " << endl;
+                    cout << "Tasta '1' - 'Bicicleta asistata electric ULZOMO Metro' ~ " << i[1].pret8 << " lei" << endl; // 5399.99
+                    cout << "Tasta '2' - 'Trotineta ACTION ONE Cityglide' ~ " << i[2].pret8 << " lei" << endl;   // 295.99                 
+                    cout << "Tasta '3' - 'Schiuri FISCHER RC One 73 AR' ~ " << i[3].pret8 << " lei" << endl;     // 2950.99     
+                    cout << "Tasta '4' - 'Racheta tenis Wilson Clash 100 V2.0' ~ " << i[4].pret8 << " lei" << endl;   // 1400    
+                    while (ok)
+                    {
+                        int tstok;
+                        cout << "Apasa tasta specifica fiecarui produs pentru adaugarea acestuia in cosul de cumparaturi." << endl;
+                        cin >> ts;
+                        if (ts == 1)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Bicicleta asistata electric ULZOMO Metro'." << endl;
+                            pret_total = pret_total + (i[1].pret8 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 2)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Trotineta ACTION ONE Cityglide'." << endl;
+                            pret_total = pret_total + (i[2].pret8 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 3)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Schiuri FISCHER RC One 73 AR'." << endl;
+                            pret_total = pret_total + (i[3].pret8 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 4)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Racheta tenis Wilson Clash 100 V2.0'." << endl;
+                            pret_total = pret_total + (i[4].pret8 * cant);
+                            cant = 0;
+                        }
+                        cout << "Doriti sa parasiti categoria 'Sport'?" << endl;
+                        cout << "Tasta '1' - 'NU' ." << endl;
+                        cout << "Tasta '2' - 'DA' ." << endl;
+                        cin >> tstok;
+                        if (tstok == 1)
+                            ok = 1;
+                        else
+                            ok = 0;
+                    }
+                }
+
+                if (tipelc == 2)
+                {
+                    cout << "Apasa tasta 'Enter' pentru a afise produsele ." << endl;
+                    cin.get();
+                    cin.get();
+                    int ok = 1;
+                    int cant = 0;
+                    short int ts; // tasta specifica;
+                    cout << "Produsele din categoria aleasa sunt : " << endl;
+                    cout << "Tasta '1' - 'Banda de alergat electrica MYRIA MY2814' ~ " << j[1].pret9 << " lei" << endl;    // 2249.99
+                    cout << "Tasta '2' - 'Bicicleta spinning TECHFIT SBK3000' ~ " << j[2].pret9 << " lei" << endl;    // 1769.99
+                    cout << "Tasta '3' - 'Aparat multifunctional fitness Orion Classic L2' ~ " << j[3].pret9 << " lei" << endl; // 3499
+                    cout << "Tasta '4' - 'Set haltera si gantere FitTronic 50 kg GR50' ~ " << j[4].pret9 << " lei" << endl;    //449.99
+                    while (ok)
+                    {
+                        int tstok;
+                        cout << "Apasa tasta specifica fiecarui produs pentru adaugarea acestuia in cosul de cumparaturi." << endl;
+                        cin >> ts;
+                        if (ts == 1)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Banda de alergat electrica MYRIA MY2814'." << endl;
+                            pret_total = pret_total + (j[1].pret9 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 2)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Bicicleta spinning TECHFIT SBK3000'." << endl;
+                            pret_total = pret_total + (j[2].pret9 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 3)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Aparat multifunctional fitness Orion Classic L2'." << endl;
+                            pret_total = pret_total + (j[3].pret9 * cant);
+                            cant = 0;
+                        }
+                        else if (ts == 4)
+                        {
+                            cout << "Cantitatea pe care o doriti : " << endl;
+                            cin >> cant;
+                            cout << "Ati adaugat in cos " << cant << "x" << " 'Set haltera si gantere FitTronic 50 kg GR50'." << endl;
+                            pret_total = pret_total + (j[4].pret9 * cant);
+                            cant = 0;
+                        }
+                        cout << "Doriti sa parasiti categoria 'Aparate pentru miscare'?" << endl;
+                        cout << "Tasta '1' - 'NU' ." << endl;
+                        cout << "Tasta '2' - 'DA' ." << endl;
+                        cin >> tstok;
+                        if (tstok == 1)
+                            ok = 1;
+                        else
+                            ok = 0;
+                    }
+                }
+                cout << "Doriti sa parasiti categoria 'Sport / Aparate pentru miscare' ?" << endl;
+                cout << "Tasta '1' - 'NU' ." << endl;
+                cout << "Tasta '2' - 'DA' ." << endl;
+                int ok2 = 0;
+                cin >> ok2;
+                if (ok2 == 1)
+                    tipelc_value = 1;
+                else
+                    tipelc_value = 0;
+            }
+        }
+
+        cout << "Doriti sa finalizati comanda?" << endl;
+        cout << "Tasta '1' - 'NU' ." << endl;
+        cout << "Tasta '2' - 'DA' ." << endl;
+        int ok3 = 0;
+        cin >> ok3;
+        if (ok3 == 1)
+            fin_com = 1;
+        else
+        {
+            fin_com = 0;
+        }
+
+        tipelc_value = 1;
+    }
+
+    cout << "Apasa tasta 'Enter' pentru a completa datele facturarii / livrarii ." << endl;
+    cin.get();
+    cin.get();
+    cout << "Completeaza datele facturarii : " << endl;
+    cout << "Numele tau : " << endl; cin >> nume;
+    cout << "Prenumele tau : " << endl; cin >> prenume;
+    cout << "Numarul tau de telefon : " << endl; cin >> nr_tel; 
+    cout << "Judetul de provenienta : " << endl; cin >> judet;
+    cout << "Alegeti metoda de plata : " << endl; cin >> met_plata;
+    ofstream file;
+    file.open(usn + "_factura" + ".txt");
+    file << "Date de facturare / livrare : " << endl;
+    file << "Nume : " << nume << endl;
+    file << "Prenume : " << prenume << endl;
+    file << "Numar de telefon : " << nr_tel << endl;
+    file << "Judetul tau de provenienta : " << judet << endl;
+    file << "Metoda de plata selectata : " << met_plata << endl;
+    file << "Pret final (fara TVA) : " << pret_total  << " lei" << endl;
+    file << "Pret final (cu TVA) : " << pret_total + (pret_total*19/100) << " lei" << endl;
+    file.close();
+
+
+    return 0;
+}
