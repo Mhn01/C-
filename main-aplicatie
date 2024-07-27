@@ -1,0 +1,136 @@
+#include <raylib.h>
+#include <iostream>
+#include "button.hpp"
+
+using namespace std;
+
+typedef enum Gamescreen
+{
+    START = 0,
+    MAIN,
+    ROCK_ROLL
+} Gamescreen;
+
+
+int main()
+{
+    InitWindow(800, 800, "Aplicatie Melodii");
+    // - Audio -
+    InitAudioDevice();
+    Music rock1 = LoadMusicStream("muzica/rock1.mp3");
+   // PlayMusicStream(rock1);
+    float timpmelod = 0;
+    bool pauza = false;
+    float volum = 1; // volum muzica
+
+    //
+    SetTargetFPS(60);
+    Button startButton{"imagini/butonstart.png", {350, 150}, 0.20};
+    Button exitButton{"imagini/butoniesire.png", {350, 450}, 0.20};
+    // imagini + background
+    Texture2D Background = LoadTexture("imagini/bck.png");
+    Button RockScale{"imagini/rock.png", {0, 75}, 0.35}; // Button doar pentru resize la imagine
+    Button Pozarock{"imagini/rock1.png", {0, 86}, 0.6};  // prima poza de la muzica rock
+
+    Gamescreen curentscreen;
+    curentscreen = START;
+
+    while (WindowShouldClose() == false)
+    {
+
+        // - Audio -
+        UpdateMusicStream(rock1);
+        if (IsKeyPressed(KEY_SPACE)) // stop si restart la muzica.
+        {
+            PlayMusicStream(rock1);
+        }
+
+        if (IsKeyPressed(KEY_P))
+        {
+            pauza = !pauza;
+            if (pauza)
+                PauseMusicStream(rock1);
+            else
+                ResumeMusicStream(rock1);
+        }
+        timpmelod = GetMusicTimePlayed(rock1)/GetMusicTimeLength(rock1);
+        if(timpmelod > 1.0f)
+        {
+            timpmelod = 1.0f;
+        }
+
+        //
+
+        Vector2 pozitiemouse = GetMousePosition();
+        bool apasaremouse = IsMouseButtonPressed(MOUSE_BUTTON_LEFT);
+        if (startButton.isPressed(pozitiemouse, apasaremouse))
+        {
+            curentscreen = MAIN; // se schimba interfata.
+        }
+        if (exitButton.isPressed(pozitiemouse, apasaremouse))
+        {
+            return 0; // iesire din aplicatie.
+        }
+
+        BeginDrawing();
+
+        DrawTexture(Background, 0, 0, WHITE);
+
+        if (curentscreen == START)
+        {
+            startButton.Draw();
+            exitButton.Draw();
+        }
+
+        if (curentscreen == MAIN)
+        {
+            WaitTime(0.5); // timp de tranzitie
+            DrawText("Welcome ! Do you want to listen some good music ?", 20, 20, 30, BLUE);
+            DrawRectangle(0, 75, 1000, 10, LIGHTGRAY);  // linie de separare.
+            DrawRectangle(0, 650, 1000, 10, LIGHTGRAY); // linie de separare.
+            RockScale.Draw();
+            DrawText("Rock & Roll", 30, 230, 20, BLUE);
+            DrawText("Press 1 for Rock & Roll", 18, 665, 20, YELLOW);
+        }
+
+        if (IsKeyPressed(KEY_ONE))
+        {
+            curentscreen = ROCK_ROLL;
+        }
+
+        if (curentscreen == ROCK_ROLL)
+        {
+            DrawText("Here is a list with golden rock songs : ", 15, 20, 40, BLUE);
+            DrawText("Send me an angel is a cool song, in my opinion.", 185, 90, 20, BLUE);
+            DrawText("It was created by Scorpions. A rock band from Germany.", 185, 115, 20, BLUE);
+            DrawText("This song has over 400 million views on youtube, also.", 185, 140, 20, BLUE);
+            DrawRectangle(0, 75, 1000, 10, LIGHTGRAY);
+            DrawRectangle(0, 175, 1000, 10, LIGHTGRAY);
+            DrawRectangle(0, 265, 1000, 10, LIGHTGRAY);
+            // bara de muzica live
+            DrawRectangle(260, 215, 400, 12, LIGHTGRAY);
+            DrawRectangle(260, 215, (int)(timpmelod*400.0f), 12, MAROON);
+            DrawRectangleLines(260, 215, 400, 12, GRAY);
+            if(IsKeyPressed(KEY_F1))
+            {
+                volum=volum-0.1;
+                SetMusicVolume(rock1, volum);
+            }
+            if(IsKeyPressed(KEY_F2))
+            {
+                volum=volum+0.1;
+                SetMusicVolume(rock1, volum);
+            }
+            //
+            Pozarock.Draw();
+        }
+
+        EndDrawing();
+    }
+
+    // unload section
+
+    UnloadTexture(Background);
+    CloseWindow();
+    return 0;
+}
