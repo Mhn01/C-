@@ -1,0 +1,30 @@
+#include "button.hpp"
+Button::Button(const char *imagePath, Vector2 imagePosition, float scale)
+{
+    Image imagorig = LoadImage(imagePath); // imagine originala
+    int latimeimag = imagorig.width;
+    int lungimeimag = imagorig.height;
+    int lungnoua = static_cast<int>(lungimeimag * scale);
+    int latimenoua = static_cast<int>(latimeimag * scale);
+    ImageResize(&imagorig, latimenoua, lungnoua); // modificare a imaginii
+    texture = LoadTextureFromImage(imagorig);
+    UnloadImage(imagorig);
+    position = imagePosition;
+}
+
+Button::~Button()
+{
+    UnloadTexture(texture);
+}
+
+void Button::Draw()
+{
+    DrawTextureV(texture, position, WHITE);
+}
+
+bool Button ::isPressed(Vector2 pozmouse, bool apasmouse){
+    Rectangle rect = {position.x, position.y, static_cast<float>(texture.width), static_cast<float>(texture.height)};
+    if(CheckCollisionPointRec(pozmouse, rect) && apasmouse)
+    return true;
+    return false;
+}
